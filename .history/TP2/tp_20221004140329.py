@@ -149,8 +149,6 @@ def cycle(n):
 
     # À COMPLÉTER DÉBUT (1 ligne(s))
 
-    return Graphe(n, [(i, (i+1)%n) for i in range(n)])
-
     # À COMPLÉTER FIN
 
 
