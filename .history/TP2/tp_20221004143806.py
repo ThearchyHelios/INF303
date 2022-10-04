@@ -174,7 +174,7 @@ def graphe_complementaire(g: Graphe):
 
     # À COMPLÉTER DÉBUT (6 ligne(s))
 
-    return Graphe(g.nombre_sommets(), [(i, j) for i in range(g.nombre_sommets()) for j in range(i+1, g.nombre_sommets()) if (i, j) not in g.aretes and (j, i) not in g.aretes])
+    return Graphe(g.nombre_sommets(), [(i, j) for i in range(g.nombre_sommets()) for j in range(i+1, g.nombre_sommets()) if (i, j) not in ga and (j, i) not in g.aretes])
 
     # À COMPLÉTER FIN
 

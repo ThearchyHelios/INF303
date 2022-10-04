@@ -4,7 +4,6 @@
 
 import random
 import copy
-from symbol import return_stmt
 
 from lib.graphe import Graphe
 
@@ -174,12 +173,12 @@ def graphe_complementaire(g: Graphe):
 
     # À COMPLÉTER DÉBUT (6 ligne(s))
 
-    return Graphe(g.nombre_sommets(), [(i, j) for i in range(g.nombre_sommets()) for j in range(i+1, g.nombre_sommets()) if (i, j) not in g.aretes and (j, i) not in g.aretes])
+    return Graphe(g.nombre_sommets, [(i, j) for i in range(g.nombre_sommets) for j in range(i+1, g.nombre_sommets) if (i, j) not in g.arcs])
 
     # À COMPLÉTER FIN
 
 
-def degre_max(g: Graphe):
+def degre_max(g):
     """Retourne le degré maximum du graphe g.
 
         -------------------
@@ -204,15 +203,6 @@ def degre_max(g: Graphe):
     """
 
     # À COMPLÉTER DÉBUT (1 ligne(s))
-
-    # return_value = 0
-    # for i in range(g.nombre_sommets):
-    #     degre = g.degre(i)
-    #     if degre > return_value:
-    #         return_value = degre
-    # return return_value
-    
-    return max([g.degre(i) for i in range(g.nombre_sommets())])
 
     # À COMPLÉTER FIN
 
