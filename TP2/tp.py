@@ -325,6 +325,14 @@ def matrice_incidence(g):
 ### Parcours ###
 ################
 
+def parcours_postfixe_aux(g, u, deja_vu):
+    deja_vu.add(u)
+    for v in g.voisins(u):
+        if v not in deja_vu:
+            parcours_postfixe_aux(g, v, deja_vu)
+    print(u, end=' ')
+
+
 def parcours_postfixe(g, u):
     """Affiche la liste des sommets dans l'ordre dans lequel ils sont traités
     lors d'un parcours postfixé du graphe g en partant du sommet u.
@@ -356,6 +364,7 @@ def parcours_postfixe(g, u):
 
     # À COMPLÉTER DÉBUT (8 ligne(s))
 
+    return parcours_postfixe_aux(g, u, set())
     # À COMPLÉTER FIN
 
 # Pour le parcours en largeur, il est nécessaire d'utiliser une file.
@@ -407,6 +416,8 @@ def creer_file(n):
 
     # À COMPLÉTER DÉBUT (1 ligne(s))
 
+    return [[-1]*n, 0, -1]
+
     # À COMPLÉTER FIN
 
 
@@ -439,6 +450,9 @@ def enfiler(f, e):
     tab = f[0]
 
     # À COMPLÉTER DÉBUT (2 ligne(s))
+
+    f[2] += 1
+    tab[f[2]] = e
 
     # À COMPLÉTER FIN
 
@@ -476,6 +490,10 @@ def defiler(f):
 
     # À COMPLÉTER DÉBUT (2 ligne(s))
 
+    e = tab[f[1]]
+    f[1] += 1
+    return e
+
     # À COMPLÉTER FIN
 
 
@@ -509,6 +527,8 @@ def est_vide(f):
     """
 
     # À COMPLÉTER DÉBUT (1 ligne(s))
+
+    return f[1] > f[2]
 
     # À COMPLÉTER FIN
 
