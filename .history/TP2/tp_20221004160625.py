@@ -150,7 +150,7 @@ def cycle(n):
 
     # À COMPLÉTER DÉBUT (1 ligne(s))
 
-    return Graphe(n, [(i, (i+1) % n) for i in range(n)])
+    return Graphe(n, [(i, (i+1)%n) for i in range(n)])
 
     # À COMPLÉTER FIN
 
@@ -211,7 +211,7 @@ def degre_max(g: Graphe):
     #     if degre > return_value:
     #         return_value = degre
     # return return_value
-
+    
     return max([g.degre(i) for i in range(g.nombre_sommets())])
 
     # À COMPLÉTER FIN
@@ -270,7 +270,7 @@ def matrice_adjacence(g: Graphe):
     # >>> mat = [[0]*j for _ in range(i)]
 
     # À COMPLÉTER DÉBUT (6 ligne(s))
-
+    
     return [[1 if (i, j) in g.aretes or (j, i) in g.aretes else 0 for j in range(g.nombre_sommets())] for i in range(g.nombre_sommets())]
 
     # À COMPLÉTER FIN
