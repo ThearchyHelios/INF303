@@ -174,7 +174,12 @@ def graphe_complementaire(g: Graphe):
 
     # À COMPLÉTER DÉBUT (6 ligne(s))
 
-    return Graphe(g.nombre_sommets(), [(i, j) for i in range(g.nombre_sommets()) for j in range(i+1, g.nombre_sommets()) if (i, j) not in g.aretes and (j, i) not in g.aretes])
+    s = []
+    j = graphe_complet(g.nombre_sommets())
+    for i in range(0, g.nombre_sommets()):
+        for k in g.voisins(i):
+            j.supprimer_arete(i, k)
+    return j
 
     # À COMPLÉTER FIN
 
@@ -271,12 +276,19 @@ def matrice_adjacence(g: Graphe):
 
     # À COMPLÉTER DÉBUT (6 ligne(s))
 
-    return [[1 if (i, j) in g.aretes or (j, i) in g.aretes else 0 for j in range(g.nombre_sommets())] for i in range(g.nombre_sommets())]
+    s = []
+    for i in range(0, g.nombre_sommets()):
+        for j in g.voisins(i):
+            s.append((i, j))
+    matrice = [[0]*g.nombre_sommets() for k in range(g.nombre_sommets())]
+    for i in range(0, len(s)):
+        matrice[s[i][0]][s[i][1]] = 1
+    return matrice
 
     # À COMPLÉTER FIN
 
 
-def matrice_incidence(g):
+def matrice_incidence(g: Graphe):
     """Retourne la matrice d'incidence du graphe g.
 
         :param g: Un graphe (Graphe)
@@ -317,6 +329,21 @@ def matrice_incidence(g):
     """
 
     # À COMPLÉTER DÉBUT (12 ligne(s))
+    k = 0
+    matrice = [[0]*g.nombre_aretes() for k in range(g.nombre_sommets())]
+    s = []
+    for i in range(0, g.nombre_sommets()):
+        for j in g.voisins(i):
+            if i < j:
+                s.append((i, j, k))
+                k = k+1
+            else:
+                for m in s:
+                    if m[0] == j and m[1] == i:
+                        s.append((i, j, m[2]))
+    for i in range(0, len(s)):
+        matrice[s[i][0]][s[i][2]] = 1
+    return matrice
 
     # À COMPLÉTER FIN
 
@@ -533,7 +560,7 @@ def est_vide(f):
     # À COMPLÉTER FIN
 
 
-def parcours_largeur(g, u):
+def parcours_largeur(g: Graphe, u):
     """Affiche la liste des sommets dans l'ordre dans lequel ils sont traités
     lors d'un parcours en largeur du graphe g en partant du sommet u.
 
@@ -562,6 +589,18 @@ def parcours_largeur(g, u):
     """
 
     # À COMPLÉTER DÉBUT (11 ligne(s))
+
+    file = creer_file(g.nombre_sommets())
+    deja_vu = [False] * g.nombre_sommets()
+    deja_vu[u] = True
+    enfiler(file, u)
+    while not est_vide(file):
+        v = defiler(file)
+        print(v, end=' ')
+        for w in g.voisins(v):
+            if not deja_vu[w]:
+                deja_vu[w] = True
+                enfiler(file, w)
 
     # À COMPLÉTER FIN
 
@@ -608,6 +647,15 @@ def parcours_prefixe(g, u):
 
     # Itératif
     # À COMPLÉTER DÉBUT (9 ligne(s))
+    def parcours_prefixe_aux(g, u, c):
+        for v in g.voisins(u):
+            if v not in c:
+                c.append(v)
+                print(v, end=" ")
+                parcours_prefixe_aux(g, v, c)
+    c = [u]
+    print(u, end=" ")
+    parcours_postfixe_aux(g, u, c)
 
     # À COMPLÉTER FIN
 
@@ -654,6 +702,18 @@ def est_connexe(g):
     """
 
     # À COMPLÉTER DÉBUT (15 ligne(s))
+    def est_connexe(g, c, u):
+        for v in g.voisins(u):
+            if v not in c:
+                c.append(v)
+                est_connexe(g, c, v)
+        if len(c) == g.nombre_sommets():
+            return True
+        return False
+
+    u = 0
+    c = [u]
+    return est_connexe(g, c, u)
 
     # À COMPLÉTER FIN
 
@@ -681,6 +741,22 @@ def nombre_composantes_connexes(g):
     """
 
     # À COMPLÉTER DÉBUT (20 ligne(s))
+    def nombre_composantes_connexes_aux(g, c, u):
+        for v in g.voisins(u):
+            if v not in c:
+                c.append(v)
+                nombre_composantes_connexes_aux(g, c, v)
+    u = 0
+    c = [u]
+    i = 1
+    nombre_composantes_connexes_aux(g, c, u)
+    while len(c) != g.nombre_sommets():
+        for j in range(0, g.nombre_sommets()):
+            if j not in c:
+                c.append(j)
+                nombre_composantes_connexes_aux(g, c, j)
+                i = i+1
+    return i
 
     # À COMPLÉTER FIN
 
@@ -713,6 +789,10 @@ def a_cycle_eulerien(g):
 
     # À COMPLÉTER DÉBUT (6 ligne(s))
 
+    for i in range(0, g.nombre_sommets()):
+        if g.degre(i) % 2 == 1:
+            return False
+    return nombre_composantes_connexes(g) == 1
     # À COMPLÉTER FIN
 
 
@@ -741,6 +821,21 @@ def a_chemin_eulerien(g):
     """
 
     # À COMPLÉTER DÉBUT (7 ligne(s))
+    
+    def a_chemin_eulerien_aux(g, u):
+        for v in g.voisins(u):
+            g.supprimer_arete(u, v)
+            a_chemin_eulerien_aux(g, v)
+        if g.nombre_aretes() == 0:
+            return True
+
+    if g.nombre_aretes() == 0:
+        return False
+    for i in range(0, g.nombre_sommets()):
+        n = g.__copy__()
+        if a_chemin_eulerien_aux(n, i):
+            return True
+    return False
 
     # À COMPLÉTER FIN
 
