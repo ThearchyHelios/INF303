@@ -4,7 +4,7 @@
 
 import copy
 import time
-from lib.graphe      import Graphe
+from lib.graphe import Graphe
 from lib.tasbinomial import TasBinomial
 
 """
@@ -72,9 +72,10 @@ def graphe_1():
     """
 
     ### À COMPLÉTER DÉBUT (1 ligne(s))
-    return Graphe(4, [(0, 1, 1), (0, 2, 2), (1, 3, 2), (1, 4, 3)])
+    return Graphe(4, [(0, 1, 1), (0, 2, 2), (1, 2, 3), (1, 3, 4)])
 
     ### À COMPLÉTER FIN
+
 
 def graphe_2():
     """Retourne le graphe (Graphe) G2.
@@ -104,9 +105,9 @@ def graphe_2():
     """
 
     ### À COMPLÉTER DÉBUT (1 ligne(s))
-    return Graphe(4, [(0, 11, 1), (0, 1, 2), (0, 10, 3), (1, 9, 2), (1, 4, 3), (2, 3, 3)])
-
+    return Graphe(4, [(0, 1, 11), (0, 2, 1), (0, 3, 10), (1, 2, 9), (1, 3, 4), (2, 3, 3)])
     ### À COMPLÉTER FIN
+
 
 def graphe_3(n):
     """Retourne un graphe à n sommet, tel qu'il existe une arête entre i et j si
@@ -138,10 +139,16 @@ def graphe_3(n):
     """
 
     ### À COMPLÉTER DÉBUT (6 ligne(s))
-
+    graphe_3_aux = Graphe(n)
+    for i in range(n):
+        for j in range(i+1, n):
+            if abs(i-j) <= 2:
+                graphe_3_aux.ajouter_arete(i, j, i+j)
+    return graphe_3_aux
     ### À COMPLÉTER FIN
 
-def aretes_triees(g):
+
+def aretes_triees(g: Graphe):
     """Retourne la liste des arêtes de g triées par poids croissant.
 
         Les arêtes (uv) sont tel que u < v.
@@ -164,10 +171,17 @@ def aretes_triees(g):
     # >>> l.sort(key=lambda t: t[i])
 
     ### À COMPLÉTER DÉBUT (7 ligne(s))
-
+    aretes = []
+    for u in range(g.nombre_sommets()):
+        for v, p in g.voisins_avec_poids(u):
+            if u < v:
+                aretes.append((u, v, p))
+    aretes.sort(key=lambda t: t[2])
+    return aretes
     ### À COMPLÉTER FIN
 
-def est_connexe(g):
+
+def est_connexe(g: Graphe):
     """Retourne True si g est connexe, False sinon.
 
         -------------------
@@ -214,10 +228,23 @@ def est_connexe(g):
     # réutiliser votre code.
 
     ### À COMPLÉTER DÉBUT (12 ligne(s))
+    def est_connexe(g, c, u):
+        for v in g.voisins(u):
+            if v not in c:
+                c.append(v)
+                est_connexe(g, c, v)
+        if len(c) == g.nombre_sommets():
+            return True
+        return False
+
+    u = 0
+    c = [u]
+    return est_connexe(g, c, u)
 
     ### À COMPLÉTER FIN
 
-def kruskal_inverse(g):
+
+def kruskal_inverse(g: Graphe):
     """Retourne un arbre couvrant de poids minimum du graphe g en utilisant
     l'algorithme de Kruskal inverse.
 
@@ -248,11 +275,19 @@ def kruskal_inverse(g):
     t = copy.copy(g)
     l = []
 
-    ### À COMPLÉTER DÉBUT (10 ligne(s))
+    # À COMPLÉTER DÉBUT (10 ligne(s))
+    aretes = aretes_triees(g)
+    aretes.reverse()
+    for u, v, poids in aretes:
+        t.supprimer_arete(u, v)
+        if not est_connexe(t):
+            t.ajouter_arete(u, v, poids)
+        else:
+            l.append((u, v))
+    l.append(None)
+    return t, l
 
-    ### À COMPLÉTER FIN
-
-    return (t, l)
+    # À COMPLÉTER FIN
 
 
 #############################
@@ -298,6 +333,7 @@ def ufl_creer(n):
 
     ### À COMPLÉTER FIN
 
+
 def ufl_find(l, v):
     """Retourne l'indice de la composante connexe du sommet i dans la structure
     UNION-FIND l.
@@ -321,6 +357,7 @@ def ufl_find(l, v):
     ### À COMPLÉTER DÉBUT (1 ligne(s))
 
     ### À COMPLÉTER FIN
+
 
 def ufl_union(l, i, j):
     """Fusionne les composantes connexes d'indice i et j dans la structure
@@ -350,6 +387,7 @@ def ufl_union(l, i, j):
     ### À COMPLÉTER DÉBUT (3 ligne(s))
 
     ### À COMPLÉTER FIN
+
 
 def kruskal_ufl(g):
     """Retourne un arbre couvrant de poids minimum du graphe g en utilisant
@@ -419,6 +457,7 @@ quit()
 # https://fr.wikipedia.org/wiki/Union-find#Impl%C3%A9mentation_utilisant_des_for%C3%AAts
 # Pensez à bien implémenter toutes les optimisations proposées.
 
+
 def uff_creer(n):
     """Retourne la structure UNION-FIND initialisée.
 
@@ -441,6 +480,7 @@ def uff_creer(n):
     ### À COMPLÉTER DÉBUT (1 ligne(s))
 
     ### À COMPLÉTER FIN
+
 
 def uff_find(l, v):
     """Retourne l'indice de la composante connexe du sommet i dans la structure
@@ -524,6 +564,7 @@ def uff_find(l, v):
 
     ### À COMPLÉTER FIN
 
+
 def uff_union(l, i, j):
     """Fusionne les composantes connexes d'indice i et j dans la structure
     UNION-FIND l.
@@ -595,6 +636,7 @@ def uff_union(l, i, j):
 
     ### À COMPLÉTER FIN
 
+
 def kruskal_uff(g):
     """Retourne un arbre couvrant de poids minimum du graphe g en utilisant
     l'algorithme de Kruskal avec la structure UNION-FIND utilisant des forêts.
@@ -633,6 +675,7 @@ def kruskal_uff(g):
 
 # Décommentez les lignes suivantes pour comparer la différence de temps
 # d'exécution entre les deux implémentations de la structure UNION-FIND:
+
 
 """
 t0 = time.time()
@@ -710,7 +753,7 @@ def prim(g):
 
     n = g.nombre_sommets()
     pred = [None]*n
-    l    = [None]*n # l[v] == None <=> v n'a pas encore été ajouté
+    l = [None]*n  # l[v] == None <=> v n'a pas encore été ajouté
     t = Graphe(n)
     f = TasBinomial(n)
     it = iter(range(n))
@@ -720,6 +763,7 @@ def prim(g):
     ### À COMPLÉTER FIN
 
     return (t, l)
+
 
 def graphe_4(n):
     """Retourne le graphe G4 à n+2 sommet, tel que le sous-graphe induit par les
@@ -771,6 +815,7 @@ def graphe_4(n):
 # l'UNION-FIND utilisant les forêts est un peu moins rapide que celui utilisant
 # le tableau.
 
+
 """
 g = graphe_4(1024)
 # g = graphe_3(8192)
@@ -799,24 +844,24 @@ quit()
 if __name__ == "__main__":
     import doctest
     fonctions = [
-            graphe_1,
-            graphe_2,
-            graphe_3,
-            aretes_triees,
-            est_connexe,
-            kruskal_inverse,
-            ufl_creer,
-            ufl_find,
-            ufl_union,
-            kruskal_ufl,
-            uff_creer,
-            uff_find,
-            uff_union,
-            kruskal_uff,
-            prim,
+        graphe_1,
+        graphe_2,
+        graphe_3,
+        aretes_triees,
+        est_connexe,
+        kruskal_inverse,
+        ufl_creer,
+        ufl_find,
+        ufl_union,
+        kruskal_ufl,
+        uff_creer,
+        uff_find,
+        uff_union,
+        kruskal_uff,
+        prim,
     ]
     for f in fonctions:
         print("**********************************************************************")
         print(f.__name__)
-        doctest.run_docstring_examples(f, globals(), optionflags=doctest.FAIL_FAST)
-
+        doctest.run_docstring_examples(
+            f, globals(), optionflags=doctest.FAIL_FAST)
