@@ -1,3 +1,11 @@
+'''
+Author: ThearchyHelios
+Date: 2022-10-18 13:34:31
+LastEditTime: 2022-11-04 18:17:27
+LastEditors: ThearchyHelios
+Description: 
+FilePath: /INF303/TP3/tp.py
+'''
 ###############################################
 ### TP3 - Arbres couvrants de poids minimum ###
 ###############################################
@@ -15,7 +23,8 @@ le fichier est exécuté.
 Comment faire les TP :
 * Téléchargez et décompressez l'archive du TP.
 * Ouvrez le fichier « tp.py » dans votre éditeur de texte favori.
-* Complétez une par une les fonctions entre les lignes « ### À COMPLÉTER DÉBUT » (0 ligne(s))
+### À COMPLÉTER DÉBUT » (0 ligne(s))
+* Complétez une par une les fonctions entre les lignes «
 
 et « ### À COMPLÉTER FIN »
 * Lorsque vous pensez avoir terminé une fonction, exécutez le fichier sur votre
@@ -71,10 +80,10 @@ def graphe_1():
 
     """
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
     return Graphe(4, [(0, 1, 1), (0, 2, 2), (1, 2, 3), (1, 3, 4)])
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
 
 def graphe_2():
@@ -104,9 +113,9 @@ def graphe_2():
 
     """
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
     return Graphe(4, [(0, 1, 11), (0, 2, 1), (0, 3, 10), (1, 2, 9), (1, 3, 4), (2, 3, 3)])
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
 
 def graphe_3(n):
@@ -138,14 +147,14 @@ def graphe_3(n):
 
     """
 
-    ### À COMPLÉTER DÉBUT (6 ligne(s))
+    # À COMPLÉTER DÉBUT (6 ligne(s))
     graphe_3_aux = Graphe(n)
     for i in range(n):
         for j in range(i+1, n):
             if abs(i-j) <= 2:
                 graphe_3_aux.ajouter_arete(i, j, i+j)
     return graphe_3_aux
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
 
 def aretes_triees(g: Graphe):
@@ -170,7 +179,7 @@ def aretes_triees(g: Graphe):
     # Pour trier une liste l de tuples selon leur ieme composante :
     # >>> l.sort(key=lambda t: t[i])
 
-    ### À COMPLÉTER DÉBUT (7 ligne(s))
+    # À COMPLÉTER DÉBUT (7 ligne(s))
     aretes = []
     for u in range(g.nombre_sommets()):
         for v, p in g.voisins_avec_poids(u):
@@ -178,7 +187,7 @@ def aretes_triees(g: Graphe):
                 aretes.append((u, v, p))
     aretes.sort(key=lambda t: t[2])
     return aretes
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
 
 def est_connexe(g: Graphe):
@@ -227,7 +236,7 @@ def est_connexe(g: Graphe):
     # Si vous aviez déjà implémenté cette fonction au TP précédent, vous pouvez
     # réutiliser votre code.
 
-    ### À COMPLÉTER DÉBUT (12 ligne(s))
+    # À COMPLÉTER DÉBUT (12 ligne(s))
     def est_connexe(g, c, u):
         for v in g.voisins(u):
             if v not in c:
@@ -241,7 +250,7 @@ def est_connexe(g: Graphe):
     c = [u]
     return est_connexe(g, c, u)
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
 
 def kruskal_inverse(g: Graphe):
@@ -274,17 +283,17 @@ def kruskal_inverse(g: Graphe):
     n = g.nombre_sommets()
     t = copy.copy(g)
     l = []
-
-    # À COMPLÉTER DÉBUT (10 ligne(s))
-    aretes = aretes_triees(g)
+    ### À COMPLÉTER DÉBUT (10 ligne(s))
+    aretes = aretes_triees(t)
     aretes.reverse()
     for u, v, poids in aretes:
         t.supprimer_arete(u, v)
         if not est_connexe(t):
             t.ajouter_arete(u, v, poids)
+            if t.nombre_aretes() != n-1:
+                l.append(None)
         else:
             l.append((u, v))
-    l.append(None)
     return t, l
 
     # À COMPLÉTER FIN
@@ -329,9 +338,9 @@ def ufl_creer(n):
 
     """
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
-
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER DÉBUT (1 ligne(s))
+    return [i for i in range(n)]
+    # À COMPLÉTER FIN
 
 
 def ufl_find(l, v):
@@ -354,9 +363,9 @@ def ufl_find(l, v):
 
     """
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
-
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER DÉBUT (1 ligne(s))
+    return l[v]
+    # À COMPLÉTER FIN
 
 
 def ufl_union(l, i, j):
@@ -384,12 +393,16 @@ def ufl_union(l, i, j):
 
     """
 
-    ### À COMPLÉTER DÉBUT (3 ligne(s))
+    # À COMPLÉTER DÉBUT (3 ligne(s))
+    if i > j:
+        i, j = j, i
+    for k in range(len(l)):
+        if l[k] == j:
+            l[k] = i
+    # À COMPLÉTER FIN
 
-    ### À COMPLÉTER FIN
 
-
-def kruskal_ufl(g):
+def kruskal_ufl(g: Graphe):
     """Retourne un arbre couvrant de poids minimum du graphe g en utilisant
     l'algorithme de Kruskal avec la structure UNION-FIND utilisant un tableau.
 
@@ -421,11 +434,23 @@ def kruskal_ufl(g):
     uf = ufl_creer(n)
     l = []
 
-    ### À COMPLÉTER DÉBUT (13 ligne(s))
+    # À COMPLÉTER DÉBUT (13 ligne(s))
+    aretes = aretes_triees(g)
+    # aretes.reverse()
+    for u, v , poids in aretes:
+        i = ufl_find(uf, u)
+        j = ufl_find(uf, v)
+        if i != j:
+            t.ajouter_arete(u, v, poids)
+            l.append((u, v))
+            ufl_union(uf, i, j)
+        else:
+            l.append(None)
+    while l[-1] == None:
+        l.pop()
+    return t, l
 
-    ### À COMPLÉTER FIN
-
-    return (t, l)
+    # À COMPLÉTER FIN
 
 
 ########################################################
@@ -477,9 +502,10 @@ def uff_creer(n):
 
     """
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
+    return [[i, 0] for i in range(n)]
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
 
 def uff_find(l, v):
@@ -560,9 +586,12 @@ def uff_find(l, v):
 
     """
 
-    ### À COMPLÉTER DÉBUT (3 ligne(s))
+    # À COMPLÉTER DÉBUT (3 ligne(s))
+    if l[v][0] != v:
+        l[v][0] = uff_find(l, l[v][0])
+    return l[v][0]
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
 
 def uff_union(l, i, j):
@@ -632,12 +661,19 @@ def uff_union(l, i, j):
     ri = l[i][1]
     rj = l[j][1]
 
-    ### À COMPLÉTER DÉBUT (7 ligne(s))
+    # À COMPLÉTER DÉBUT (7 ligne(s))
+    if ri > rj:
+        l[j][0] = i
+    elif ri < rj:
+        l[i][0] = j
+    else:
+        l[j][0] = i
+        l[i][1] += 1
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
 
-def kruskal_uff(g):
+def kruskal_uff(g: Graphe):
     """Retourne un arbre couvrant de poids minimum du graphe g en utilisant
     l'algorithme de Kruskal avec la structure UNION-FIND utilisant des forêts.
 
@@ -667,9 +703,17 @@ def kruskal_uff(g):
     t = Graphe(n)
     l = []
 
-    ### À COMPLÉTER DÉBUT (13 ligne(s))
+    # À COMPLÉTER DÉBUT (13 ligne(s))
+    aretes = aretes_triees(g)
+    for u, v, poid in aretes:
+        if uff_find(uf, u) != uff_find(uf, v):
+            t.ajouter_arete(u, v, poid)
+            uff_union(uf, u, v)
+            l.append((u, v))
+        else:
+            l.append(None)
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
     return (t, l)
 
@@ -758,9 +802,9 @@ def prim(g):
     f = TasBinomial(n)
     it = iter(range(n))
 
-    ### À COMPLÉTER DÉBUT (10 ligne(s))
+    # À COMPLÉTER DÉBUT (10 ligne(s))
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
     return (t, l)
 
