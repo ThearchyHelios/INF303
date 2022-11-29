@@ -1,3 +1,11 @@
+'''
+Author: ThearchyHelios
+Date: 2022-11-15 13:44:05
+LastEditTime: 2022-11-22 14:58:37
+LastEditors: ThearchyHelios
+Description: 
+FilePath: /INF303/TP4/tp.py
+'''
 #################################
 ### TP4 - Plus courts chemins ###
 #################################
@@ -36,6 +44,7 @@ tous les tests ne garantit pas qu'elle soit correcte. Gardez cela en tête
 lorsque vous réutilisez vos fonctions dans d'autres fonctions.
 """
 
+
 def graphe_1():
     """Retourne le graphe G1.
 
@@ -63,9 +72,12 @@ def graphe_1():
     """
 
     return Graphe(12, [
-        (0, 1, 1), (0, 7, 8), (1, 2, 1), (1, 6, 6), (2, 3, 1), (2, 5, 4), (3, 4, 1),
-        (4, 5, 1), (4, 11, 8), (5, 6, 1), (5, 10, 6), (6, 7, 1), (6, 9, 4), (7, 8, 1),
+        (0, 1, 1), (0, 7, 8), (1, 2, 1), (1, 6,
+                                          6), (2, 3, 1), (2, 5, 4), (3, 4, 1),
+        (4, 5, 1), (4, 11, 8), (5, 6, 1), (5,
+                                           10, 6), (6, 7, 1), (6, 9, 4), (7, 8, 1),
         (8, 9, 1), (9, 10, 1), (10, 11, 1)], oriente=True)
+
 
 def graphe_2():
     """Retourne le graphe G2.
@@ -87,8 +99,10 @@ def graphe_2():
     """
 
     return Graphe(8, [
-        (0, 1, 1), (0, 7, 8), (1, 2, 1), (1, 6, 6), (2, 3, 1), (2, 5, 4), (3, 4, 1),
+        (0, 1, 1), (0, 7, 8), (1, 2, 1), (1, 6,
+                                          6), (2, 3, 1), (2, 5, 4), (3, 4, 1),
         (4, 5, 1), (5, 6, 1), (6, 7, 3)], oriente=True)
+
 
 def graphe_2_bis():
     """Retourne le graphe G2'.
@@ -111,8 +125,10 @@ def graphe_2_bis():
     """
 
     return Graphe(8, [
-        (7, 6, 1), (7, 0, 8), (6, 5, 1), (6, 1, 6), (5, 4, 1), (5, 2, 4), (4, 3, 1),
+        (7, 6, 1), (7, 0, 8), (6, 5, 1), (6, 1,
+                                          6), (5, 4, 1), (5, 2, 4), (4, 3, 1),
         (3, 2, 1), (2, 1, 1), (1, 0, 3)], oriente=True)
+
 
 def graphe_3():
     """Retourne le graphe G3.
@@ -148,7 +164,7 @@ def graphe_3():
         (3, 0, 2), (3, 2, 4), (3, 4, 4),
         (4, 3, 4), (4, 5, 1),
         (5, 1, 6), (5, 4, 1)
-        ], oriente=True)
+    ], oriente=True)
 
 
 ##############################
@@ -192,10 +208,11 @@ def fptableau_creer(n):
 
     # Aide : les 'inf' s'obtiennent avec « float('inf') »
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
     return [[float('inf') for i in range(n)], 0]
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
+
 
 def fptableau_ajouter(f, u, c):
     """Ajoute un élément u de cout c à la file de priorité f.
@@ -233,14 +250,15 @@ def fptableau_ajouter(f, u, c):
 
     tab = f[0]
 
-    ### À COMPLÉTER DÉBUT (3 ligne(s))
+    # À COMPLÉTER DÉBUT (3 ligne(s))
     tab[u] = c
     count = 0
     for i in tab:
         if i != float('inf'):
             count += 1
     f[1] = count
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
+
 
 def fptableau_retirer(f):
     """Supprime et retourne l'élément de cout minimum de la file de priorité f.
@@ -294,7 +312,7 @@ def fptableau_retirer(f):
 
     tab = f[0]
 
-    ### À COMPLÉTER DÉBUT (8 ligne(s))
+    # À COMPLÉTER DÉBUT (8 ligne(s))
     for i in tab:
         if i != float('inf') and i == min(tab):
             index = tab.index(i)
@@ -302,7 +320,8 @@ def fptableau_retirer(f):
             f[1] -= 1
             return index, i
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
+
 
 def fptableau_cout(f, v):
     """Retourne le cout de l'élément d'indice v dans la file de priorité f.
@@ -329,10 +348,11 @@ def fptableau_cout(f, v):
 
     tab = f[0]
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
     return tab[v]
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
+
 
 def fptableau_est_vide(f):
     """Retourne True ssi la file de priorité f est vide.
@@ -363,13 +383,14 @@ def fptableau_est_vide(f):
 
     """
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
     for i in f[0]:
         if i != float('inf'):
             return False
     return True
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
+
 
 def chemin(s, t, pred):
     """Retourne le chemin de s à t en se basant sur le tableau de prédécesseurs
@@ -398,12 +419,12 @@ def chemin(s, t, pred):
     """
 
     # Récursif
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
     # return [t] if pred[t] == s else chemin(s, pred[t], pred) + [t]
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
     # Itératif
-    ### À COMPLÉTER DÉBUT (4 ligne(s))
+    # À COMPLÉTER DÉBUT (4 ligne(s))
     l = [t]
     while pred[t] != s:
         l.append(pred[t])
@@ -411,7 +432,8 @@ def chemin(s, t, pred):
     l.append(s)
     l.reverse()
     return l
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
+
 
 def dijkstra_fptableau(g: Graphe, s, t=None):
     """Retourne un plus court chemin de s à tous les autres sommets du graphe
@@ -498,13 +520,38 @@ def dijkstra_fptableau(g: Graphe, s, t=None):
     n = g.nombre_sommets()
     dist = [float('inf')]*n
     pred = [None]*n
-    l    = [None]*n # => si l[v] == None, alors le sommet n'a pas encore été traité
+    l = [None]*n  # => si l[v] == None, alors le sommet n'a pas encore été traité
 
-    ### À COMPLÉTER DÉBUT (13 ligne(s))
-    
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER DÉBUT (13 ligne(s))
+    # changer dist, pred, l du g
 
-    return (dist, pred, l) if t == None else (dist[t], chemin(s, t, pred), l)
+    # initialisation
+    dist[s] = 0
+    pred[s] = None
+    l[s] = 0
+
+    # file de priorité
+    f = []
+    for i in range(n):
+        f.append((dist[i], i))
+    f.sort()
+
+    # algorithme
+    while len(f) > 0:
+        # on prend le sommet de plus petit poids
+        d, u = f.pop(0)
+        # on met à jour l[u]
+        l[u] = n - len(f) - 1
+        # si t != None et que u = t, on arrête
+        if t != None and u == t:
+            break
+        # on met à jour les poids des voisins de u
+        # poid() retourne int
+        # poid() dont have a input
+
+    if t is None:
+        return dist, pred, l
+    return dist[t], chemin(s, t, pred), l
 
 
 ##################################################################
@@ -581,8 +628,8 @@ def tasbinaire_verifier(f, verbose=True):
             if verbose:
                 print(f)
                 print("Positions incohérentes: ",
-                        "(", u, ", ", cu, ") est à la position ", pu,
-                        " mais devrait être à la position ", pos[u], sep="")
+                      "(", u, ", ", cu, ") est à la position ", pu,
+                      " mais devrait être à la position ", pos[u], sep="")
             return False
 
         for pv in range(2*pu+1, 2*pu+3):
@@ -594,10 +641,11 @@ def tasbinaire_verifier(f, verbose=True):
             if verbose:
                 print(f)
                 print("L'arbre n'est pas un tas: ",
-                        " élément ", pu, " : (", u, ", ", cu, "),"
-                        " élément ", pv, " : (", v, ", ", cv, ")", sep="")
+                      " élément ", pu, " : (", u, ", ", cu, "),"
+                      " élément ", pv, " : (", v, ", ", cv, ")", sep="")
             return False
     return True
+
 
 def tasbinaire_creer(n):
     """Retourne une file de priorité dont le nombre d'éléments est <= n.
@@ -617,10 +665,11 @@ def tasbinaire_creer(n):
 
     """
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
     return [[None]*n, [None]*n, 0]
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
+
 
 def tasbinaire_ajouter(f, u, c, debug=False):
     """Ajoute un élément u de cout c à la file de priorité f.
@@ -680,16 +729,16 @@ def tasbinaire_ajouter(f, u, c, debug=False):
         tasbinaire_verifier(f)
 
     # Si l'élément n'est pas dans le tas, on le place à la fin
-    ### À COMPLÉTER DÉBUT (3 ligne(s))
+    # À COMPLÉTER DÉBUT (3 ligne(s))
     if pos[u] is None:
         pos[u] = f[2]
         f[2] += 1
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
     # On met à jour son cout
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
     tas[pos[u]] = (u, c)
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
     if debug:
         print(f)
@@ -704,19 +753,22 @@ def tasbinaire_ajouter(f, u, c, debug=False):
     #     if debug:
     #         print(f)
 
-    ### À COMPLÉTER DÉBUT (10 ligne(s))
+    # À COMPLÉTER DÉBUT (10 ligne(s))
     while pos[u] != 0:
         v = (pos[u] - 1) // 2
         if tas[v][1] <= tas[pos[u]][1]:
             break
         else:
-            # Échanger u et v a la meme temps
-            tas[v], tas[pos[u]] = tas[pos[u]], tas[v]
-            pos[tas[v][0]], pos[tas[pos[u]][0]] = pos[tas[pos[u]][0]], pos[tas[v][0]]
-    ### À COMPLÉTER FIN
+            tas[pos[u]], tas[v] = tas[v], tas[pos[u]]
+            pos[tas[pos[u]][0]], pos[tas[v][0]
+                                     ] = pos[tas[v][0]], pos[tas[pos[u]][0]]
+        if debug:
+            print(f)
+    # À COMPLÉTER FIN
 
     if debug:
         tasbinaire_verifier(f)
+
 
 def tasbinaire_retirer(f, debug=False):
     """Supprime et retourne l'élément de cout minimum de la file de priorité f.
@@ -767,97 +819,59 @@ def tasbinaire_retirer(f, debug=False):
     if debug:
         tasbinaire_verifier(f)
 
-    f[2] -= 1 # On met à jour la taille
+    f[2] -= 1  # On met à jour la taille
 
     # Si la file ne contient qu'un élément, on le supprime et on le retourne
-    ### À COMPLÉTER DÉBUT (7 ligne(s))
-    if f[2] == 1:
-        f[2] = 0
-        pos[tas[0][0]] = None
-        return tas[0]
-
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER DÉBUT (7 ligne(s))
+    pos[tas[0][0]] = None
+    res = tas[0]
+    if f[2] == 0:
+        tas[0] = None
+    # À COMPLÉTER FIN
 
     # Sinon, on remplace le premier élément par le dernier
-    ### À COMPLÉTER DÉBUT (6 ligne(s))
-    tas[0] = tas[f[2]]
-    pos[tas[0][0]] = 0
-    pos[tas[f[2]][0]] = None
-    tas[f[2]] = None
-    ### À COMPLÉTER FIN
-
+    # À COMPLÉTER DÉBUT (2 ligne(s))
+    else:
+        tas[0] = tas[f[2]]
+        pos[tas[0][0]] = 0
+        tas[f[2]] = None
+    # À COMPLÉTER FIN
     if debug:
         print(f)
 
     # On corrige l'arbre :
     # Tant que u n'est pas une feuille
-    #     Soit v le fils gauche de u
-    #     Si u n'a pas de fils droit
-    #         Si cout(u) <= cout(v)
-    #             break
-    #         Sinon
-    #             Échanger u et v
-    #     Sinon
-    #         Si cout(u) <= min(cout(v), cout(w))
-    #             break
-    #         Sinon
-    #             Soit w le fils droit de u
-    #             Si cout(v) < cout(w)
-    #                 Échanger u et v
-    #             Sinon
-    #                 Échanger u et w
-    #     if debug:
-    #         print(f)
-
-    ### À COMPLÉTER DÉBUT (22 ligne(s))
-    u = 0
-    while u < f[2] // 2:
-        v = 2 * u + 1
-        if 2 * u + 2 >= f[2]:
-            if tas[u][1] <= tas[v][1]:
-                break
-            else:
-                tas[u], tas[v] = tas[v], tas[u]
-                pos[tas[u][0]], pos[tas[v][0]] = pos[tas[v][0]], pos[tas[u][0]]
-        else:
-            w = 2 * u + 2
-            if tas[u][1] <= min(tas[v][1], tas[w][1]):
-                break
-            else:
-                if tas[v][1] < tas[w][1]:
-                    tas[u], tas[v] = tas[v], tas[u]
-                    pos[tas[u][0]], pos[tas[v][0]] = pos[tas[v][0]], pos[tas[u][0]]
-                else:
-                    tas[u], tas[w] = tas[w], tas[u]
-                    pos[tas[u][0]], pos[tas[w][0]] = pos[tas[w][0]], pos[tas[u][0]]
-        u = v
-    ### À COMPLÉ
-
-    ### À COMPLÉTER FIN
-
-    if debug:
-        print(f)
-
-    # Puis on corrige l'arbre :
-    # Soit u la nouvelle racine de l'arbre.
-    # Tant que u a au moins un fils
-    #     v <- fils gauche de u
-    #     Si u a un deuxième fils v2 et que cout(v2) < cout(v)
-    #         v <- v2
-    #     Si cout(v) >= cout(u)
-    #         break
-    #     Sinon
+    #     Soit v et w les fils de u
+    #     Si cout(v) <= cout(w) et cout(v) < cout(u)
     #         Échanger u et v
+    #     Sinon si cout(w) < cout(u)
+    #         Échanger u et w
+    #     Sinon
+    #         break
     #     if debug:
     #         print(f)
 
-    ### À COMPLÉTER DÉBUT (15 ligne(s))
-
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER DÉBUT (14 ligne(s))
+    n = 0
+    while 2 * n + 1 < f[2]:
+        v, w = 2 * n + 1, 2 * n + 2
+        if tas[v][1] <= tas[w][1] and tas[v][1] < tas[n][1]:
+            tas[n], tas[v] = tas[v], tas[n]
+            pos[tas[n][0]], pos[tas[v][0]] = pos[tas[v][0]], pos[tas[n][0]]
+        elif tas[w][1] < tas[n][1]:
+            tas[n], tas[w] = tas[w], tas[n]
+            pos[tas[n][0]], pos[tas[w][0]] = pos[tas[w][0]], pos[tas[n][0]]
+        else:
+            break
+        n = v
+        if debug:
+            print(f)
+    # À COMPLÉTER FIN
 
     if debug:
         tasbinaire_verifier(f)
-    return tas[0]
+    return res
+
 
 def tasbinaire_cout(f, v):
     """Retourne le cout de l'élément d'indice v dans la file de priorité f.
@@ -889,9 +903,15 @@ def tasbinaire_cout(f, v):
 
     tas, pos = f[0], f[1]
 
-    ### À COMPLÉTER DÉBUT (4 ligne(s))
+    # À COMPLÉTER DÉBUT (4 ligne(s))
+    if pos[v] is None:
+        return float('inf')
+    else:
+        return tas[pos[v]][1]
+    # À COMPLÉTER FIN
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
+
 
 def tasbinaire_est_vide(f):
     """Retourne True ssi la file de priorité f est vide.
@@ -922,11 +942,13 @@ def tasbinaire_est_vide(f):
 
     """
 
-    ### À COMPLÉTER DÉBUT (1 ligne(s))
+    # À COMPLÉTER DÉBUT (1 ligne(s))
+    return f[2] == 0
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
-def dijkstra_tasbinaire(g, s, t=None):
+
+def dijkstra_tasbinaire(g: Graphe, s, t=None):
     """Retourne un plus court chemin de s à tous les autres sommets du graphe
     g en utilisant l'algorithme de Dijkstra.
 
@@ -1008,16 +1030,36 @@ def dijkstra_tasbinaire(g, s, t=None):
 
     """
 
+
     n = g.nombre_sommets()
     dist = [float('inf')]*n
     pred = [None]*n
-    l    = [None]*n # => si l[v] == None, alors le sommet n'a pas encore été traité
+    l = [None]*n  # => si l[v] == None, alors le sommet n'a pas encore été traité
 
-    ### À COMPLÉTER DÉBUT (13 ligne(s))
+    # À COMPLÉTER DÉBUT (13 ligne(s))
+    f = tasbinaire_creer(n)
+    dist[s] = 0
+    tasbinaire_ajouter(f, s, 0)
+    while not tasbinaire_est_vide(f):
+            u = tasbinaire_retirer(f)
+            l[u] = f[2]
+            for v in g.voisins(u):
+                if dist[v] > dist[u] + g.poids():
+                    dist[v] = dist[u] + g.poids()
+                    pred[v] = u
+                    tasbinaire_ajouter(f, v, dist[v])
+                    if v == t:
+                        return dist[v], chemin(pred, s, t), l
+    # À COMPLÉTER FIN
 
-    ### À COMPLÉTER FIN
+    if t == None:
+        return dist, pred, l
+    else:
+        return dist[t], chemin(pred, s, t), l
+    # À COMPLÉTER FIN
 
-    return (dist, pred, l) if t == None else (dist[t], chemin(s, t, pred), l)
+    # return (dist, pred, l) if t == None else (dist[t], chemin(s, t, pred), l)
+
 
 def grille(n):
     """Retourne un graphe en forme de grille.
@@ -1040,14 +1082,19 @@ def grille(n):
     for u in range(n*n):
         col = u % n
         lig = u // n
-        if col != 0:   ajouter_arete(u, u-1)
-        if col != n-1: ajouter_arete(u, u+1)
-        if lig != 0:   ajouter_arete(u, u-n)
-        if lig != n-1: ajouter_arete(u, u+n)
+        if col != 0:
+            ajouter_arete(u, u-1)
+        if col != n-1:
+            ajouter_arete(u, u+1)
+        if lig != 0:
+            ajouter_arete(u, u-n)
+        if lig != n-1:
+            ajouter_arete(u, u+n)
     return g
 
 # Décommentez les lignes suivantes pour comparer la différence de temps
 # d'exécution entre les deux implémentations de la file de priorité:
+
 
 """
 import time
@@ -1192,13 +1239,40 @@ def dijkstra_tasbinomial(g, s, t=None):
     n = g.nombre_sommets()
     dist = [float('inf')]*n
     pred = [None]*n
-    l    = [None]*n # => si l[v] == None, alors le sommet n'a pas encore été traité
+    l = [None]*n  # => si l[v] == None, alors le sommet n'a pas encore été traité
 
-    ### À COMPLÉTER DÉBUT (13 ligne(s))
-
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER DÉBUT (13 ligne(s))
+    f = TasBinomial(n)
+    f.ajouter(s, 0)
+    dist[s] = 0
+    i = 0
+    while not f.est_vide():
+        v, cv = f.retirer()
+        if l[v] is None:
+            l[v] = i
+            i += 1
+            for w in g.successeurs(v):
+                if l[w] is None:
+                    if dist[w] > dist[v] + g.cout(v, w):
+                        dist[w] = dist[v] + g.cout(v, w)
+                        pred[w] = v
+                        f.ajouter(w, dist[w])
+    # À COMPLÉTER FIN
+    if t is None:
+        return dist, pred, l
+    else:
+        d = dist[t]
+        c = None
+        if d != float('inf'):
+            c = [t]
+            while c[-1] != s:
+                c.append(pred[c[-1]])
+            c.reverse()
+        return d, c, l
+    # À COMPLÉTER FIN
 
     return (dist, pred, l) if t == None else (dist[t], chemin(s, t, pred), l)
+
 
 """
 import time
@@ -1298,6 +1372,7 @@ def graphe_5():
 # Pour plus de détails :
 # https://fr.wikipedia.org/wiki/Algorithme_de_Bellman-Ford
 
+
 def bellman_ford(g, s):
     """Retourne un plus court chemin de s à tous les autres sommets du graphe
     g en utilisant l'algorithme de Bellman-Ford.
@@ -1334,9 +1409,10 @@ def bellman_ford(g, s):
     dist[s] = 0
     pred = [None]*n
 
-    ### À COMPLÉTER DÉBUT (10 ligne(s))
+    # À COMPLÉTER DÉBUT (10 ligne(s))
+    
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
     return (dist, pred)
 
@@ -1349,6 +1425,7 @@ def bellman_ford(g, s):
 # quit()
 
 # ... mais il est plus lent que Dijkstra sur les graphes avec des poids positifs :
+
 
 """
 import time
@@ -1440,14 +1517,15 @@ def floyd_warshall(g):
         for v, cuv in g.voisins_avec_poids(u):
             dist[u][v] = cuv
 
-    ### À COMPLÉTER DÉBUT (4 ligne(s))
+    # À COMPLÉTER DÉBUT (4 ligne(s))
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
     return dist
 
 # L'algorithme de Floyd-Washall permet de faire plus que les algorithms de
 # Dijkstra et Bellman-Ford, en contrpartie, il est plus lent :
+
 
 """
 import time
@@ -1527,6 +1605,7 @@ def graphe_4():
 
     return Graphe(6, [(0, 1, 1), (0, 2, 2), (1, 3, 4), (2, 3, 2), (3, 4, 1), (4, 5, 6)], oriente=True)
 
+
 def graphe_4_heuristique(u):
     return [10, 5, 8, 1, 6, 0][u]
 
@@ -1543,6 +1622,7 @@ def graphe_4_heuristique(u):
 
 # Pour plus de détails, vous pouvez lire la page Wikipédia :
 # https://fr.wikipedia.org/wiki/Algorithme_A*
+
 
 def a_star(g, d, s, t):
     """Retourne un plus court chemin de s à t dans g en utilisant l'algorithme
@@ -1582,21 +1662,24 @@ def a_star(g, d, s, t):
     """
 
     n = g.nombre_sommets()
-    dist = [float('inf')]*n # dist[v] : plus petite distance courante pour aller de s à v.
-    cout = [float('inf')]*n # cout[u] : cout du sommet u la dernière fois qu'il a été défilé.
+    # dist[v] : plus petite distance courante pour aller de s à v.
+    dist = [float('inf')]*n
+    # cout[u] : cout du sommet u la dernière fois qu'il a été défilé.
+    cout = [float('inf')]*n
     pred = [None]*n
-    l    = [None]*n
+    l = [None]*n
 
     dist[s] = 0
 
-    ### À COMPLÉTER DÉBUT (15 ligne(s))
+    # À COMPLÉTER DÉBUT (15 ligne(s))
 
-    ### À COMPLÉTER FIN
+    # À COMPLÉTER FIN
 
     return (dist[t], chemin(s, t, pred), l)
 
 # Les fonctions suivantes sont utilisées pour générer un graphe où les sommets
 # sont des points d'un plan. Vous n'avez pas besoin de les comprendre.
+
 
 def intersection(p1, q1, p2, q2):
     """Retourne True ssi le segment [p1,q1] intersecte le segment [p2,q2].
@@ -1611,9 +1694,12 @@ def intersection(p1, q1, p2, q2):
 
     def orientation(p, q, r):
         val = (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1])
-        if   val == 0: return 0
-        elif val >  0: return 1
-        else:          return 2
+        if val == 0:
+            return 0
+        elif val > 0:
+            return 1
+        else:
+            return 2
 
     o1 = orientation(p1, q1, p2)
     o2 = orientation(p1, q1, q2)
@@ -1625,18 +1711,28 @@ def intersection(p1, q1, p2, q2):
     # print("sur_segment(P1, Q2, Q1):", sur_segment(p1, q2, q1))
     # print("sur_segment(P2, P1, Q2):", sur_segment(p2, p1, q2))
     # print("sur_segment(P1, P2, Q1):", sur_segment(p1, p2, q1))
-    if p1 == p2: return (o4 == 0 and (sur_segment(p2, q1, q2) or sur_segment(p1, q2, q1)))
-    if p1 == q2: return (o4 == 0 and (sur_segment(p2, q1, q2) or sur_segment(p1, p2, q1)))
-    if q1 == p2: return (o3 == 0 and (sur_segment(p2, p1, q2) or sur_segment(p1, p2, q1)))
-    if q1 == q2: return (o3 == 0 and (sur_segment(p2, p1, q2) or sur_segment(p1, q2, q1)))
+    if p1 == p2:
+        return (o4 == 0 and (sur_segment(p2, q1, q2) or sur_segment(p1, q2, q1)))
+    if p1 == q2:
+        return (o4 == 0 and (sur_segment(p2, q1, q2) or sur_segment(p1, p2, q1)))
+    if q1 == p2:
+        return (o3 == 0 and (sur_segment(p2, p1, q2) or sur_segment(p1, p2, q1)))
+    if q1 == q2:
+        return (o3 == 0 and (sur_segment(p2, p1, q2) or sur_segment(p1, q2, q1)))
 
-    if o1 != o2 and o3 != o4: return True
-    if o1 == 0 and sur_segment(p1, p2, q1): return True
-    if o2 == 0 and sur_segment(p1, q2, q1): return True
-    if o3 == 0 and sur_segment(p2, p1, q2): return True
-    if o4 == 0 and sur_segment(p2, q1, q2): return True
+    if o1 != o2 and o3 != o4:
+        return True
+    if o1 == 0 and sur_segment(p1, p2, q1):
+        return True
+    if o2 == 0 and sur_segment(p1, q2, q1):
+        return True
+    if o3 == 0 and sur_segment(p2, p1, q2):
+        return True
+    if o4 == 0 and sur_segment(p2, q1, q2):
+        return True
 
     return False
+
 
 def gen_coord(n, seed=0):
     random.seed(seed)
@@ -1649,6 +1745,7 @@ def gen_coord(n, seed=0):
                 break
         coord.append((x, y))
     return coord
+
 
 def fsqrt(n):
     """Retourne floor(sqrt(n)).
@@ -1676,6 +1773,7 @@ def fsqrt(n):
     else:
         return x + 1
 
+
 def distance(coord, u, v):
     """Retourne la distance euclidienne entre les points de coord d'indices u
     et v, arrondie à l'entier supérieur.
@@ -1694,6 +1792,7 @@ def distance(coord, u, v):
 
     x = (coord[v][1] - coord[u][1])**2 + (coord[v][0] - coord[u][0])**2
     return fsqrt(x)
+
 
 def carte(coord):
     """Retourne un graphe orienté planaire triangulé dont les coordoonnées du
@@ -1748,6 +1847,7 @@ def carte(coord):
 # entre le nombre de sommets traités par l'algorithme de Dijkstra et le nombre
 # de sommets traités par l'algorithme A* :
 
+
 """
 for i in range(10):
     print("GRAPHE CARTE 100", i)
@@ -1765,6 +1865,7 @@ quit()
 # à des cartes ou avec une très mauvaise heuristique), le nombre d'itérations
 # de l'algorithme A* peut être de l'ordre de n^2 (contre n pour Dijkstra).
 # Observer par exemple ce qui se passe sur le graphe G5.
+
 
 def graphe_6(n):
     """Retourne le graphe G6.
@@ -1812,8 +1913,9 @@ def graphe_6_heuristique(n, u):
         return 0
     elif u == 2*n + 2:
         return n+1
-    else: # u == 2*n + 3
+    else:  # u == 2*n + 3
         return 0
+
 
 """
 for n in range(100, 105):
@@ -1835,26 +1937,26 @@ if __name__ == "__main__":
 
     # doctest.testmod(verbose=True, optionflags=doctest.FAIL_FAST)
     fonctions = [
-            fptableau_creer,
-            fptableau_ajouter,
-            fptableau_retirer,
-            fptableau_cout,
-            fptableau_est_vide,
-            chemin,
-            dijkstra_fptableau,
-            tasbinaire_creer,
-            tasbinaire_ajouter,
-            tasbinaire_retirer,
-            tasbinaire_cout,
-            tasbinaire_est_vide,
-            dijkstra_tasbinaire,
-            dijkstra_tasbinomial,
-            bellman_ford,
-            floyd_warshall,
-            a_star,
+        fptableau_creer,
+        fptableau_ajouter,
+        fptableau_retirer,
+        fptableau_cout,
+        fptableau_est_vide,
+        chemin,
+        dijkstra_fptableau,
+        tasbinaire_creer,
+        tasbinaire_ajouter,
+        tasbinaire_retirer,
+        tasbinaire_cout,
+        tasbinaire_est_vide,
+        dijkstra_tasbinaire,
+        dijkstra_tasbinomial,
+        bellman_ford,
+        floyd_warshall,
+        a_star,
     ]
     for f in fonctions:
         print("**********************************************************************")
         print(f.__name__)
-        doctest.run_docstring_examples(f, globals(), optionflags=doctest.FAIL_FAST)
-
+        doctest.run_docstring_examples(
+            f, globals(), optionflags=doctest.FAIL_FAST)
