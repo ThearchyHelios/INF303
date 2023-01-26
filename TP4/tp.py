@@ -1,7 +1,7 @@
 '''
 Author: ThearchyHelios
 Date: 2022-11-15 13:44:05
-LastEditTime: 2022-11-22 14:58:37
+LastEditTime: 2022-12-04 14:20:01
 LastEditors: ThearchyHelios
 Description: 
 FilePath: /INF303/TP4/tp.py
@@ -523,35 +523,27 @@ def dijkstra_fptableau(g: Graphe, s, t=None):
     l = [None]*n  # => si l[v] == None, alors le sommet n'a pas encore été traité
 
     # À COMPLÉTER DÉBUT (13 ligne(s))
-    # changer dist, pred, l du g
-
-    # initialisation
     dist[s] = 0
-    pred[s] = None
-    l[s] = 0
-
-    # file de priorité
-    f = []
-    for i in range(n):
-        f.append((dist[i], i))
-    f.sort()
-
-    # algorithme
-    while len(f) > 0:
-        # on prend le sommet de plus petit poids
-        d, u = f.pop(0)
-        # on met à jour l[u]
-        l[u] = n - len(f) - 1
-        # si t != None et que u = t, on arrête
-        if t != None and u == t:
+    fp = fptableau_creer(n)
+    fptableau_ajouter(fp, s, 0)
+    count = 0
+    while not fptableau_est_vide(fp):
+        for i in range(0, n):
+            if fptableau_cout(fp, i) != float('inf'):
+                for j, poid in g.voisins_avec_poids(i):
+                    if dist[j] > dist[i] + poid:
+                        dist[j] = dist[i] + poid
+                        pred[j] = i
+                        fptableau_ajouter(fp, j, dist[j])
+        a, b = fptableau_retirer(fp)
+        l[a] = count
+        count += 1
+        if t != None and l[t] != None:
             break
-        # on met à jour les poids des voisins de u
-        # poid() retourne int
-        # poid() dont have a input
 
-    if t is None:
-        return dist, pred, l
-    return dist[t], chemin(s, t, pred), l
+    # À COMPLÉTER FIN
+
+    return (dist, pred, l) if t == None else (dist[t], chemin(s, t, pred), l)
 
 
 ##################################################################
@@ -852,18 +844,43 @@ def tasbinaire_retirer(f, debug=False):
     #         print(f)
 
     # À COMPLÉTER DÉBUT (14 ligne(s))
-    n = 0
-    while 2 * n + 1 < f[2]:
-        v, w = 2 * n + 1, 2 * n + 2
-        if tas[v][1] <= tas[w][1] and tas[v][1] < tas[n][1]:
-            tas[n], tas[v] = tas[v], tas[n]
-            pos[tas[n][0]], pos[tas[v][0]] = pos[tas[v][0]], pos[tas[n][0]]
-        elif tas[w][1] < tas[n][1]:
-            tas[n], tas[w] = tas[w], tas[n]
-            pos[tas[n][0]], pos[tas[w][0]] = pos[tas[w][0]], pos[tas[n][0]]
+    # n = 0
+    # while 2 * n + 1 < f[2]:
+    #     v, w = 2 * n + 1, 2 * n + 2
+    #     if tas[v][1] <= tas[w][1] and tas[v][1] < tas[n][1]:
+    #         tas[n], tas[v] = tas[v], tas[n]
+    #         pos[tas[n][0]], pos[tas[v][0]] = pos[tas[v][0]], pos[tas[n][0]]
+    #     elif tas[w][1] < tas[n][1]:
+    #         tas[n], tas[w] = tas[w], tas[n]
+    #         pos[tas[n][0]], pos[tas[w][0]] = pos[tas[w][0]], pos[tas[n][0]]
+    #     else:
+    #         break
+    #     n = v
+    #     if debug:
+    #         print(f)
+    a1 = 0
+    a2 = 0
+    while f[2] > 2 * a1 + 2:
+        u = tas[a1]
+        v = tas[2 * a1 + 1]
+        if tas[2*a1+2][1] < v[1]:
+            v = tas[2 * a1 + 2]
+            a2 = 2 * a1 + 2
+        else:
+            a2 = 2 * a1 + 1
+        if v[1] < u[1]:
+            tas[a1], tas[a2] = tas[a2], tas[a1]
+            pos[tas[a1][0]], pos[tas[a2][0]] = pos[tas[a2][0]], pos[tas[a1][0]]
+            a1 = a2
+            if debug:
+                print(f)
         else:
             break
-        n = v
+    if f[2] == 2 * a1 + 2:
+        if tas[a1][1] > tas[2 * a1 + 1][1]:
+            tas[a1], tas[2 * a1 + 1] = tas[2 * a1 + 1], tas[a1]
+            pos[tas[a1][0]], pos[tas[2 * a1 + 1][0]
+                                 ] = pos[tas[2 * a1 + 1][0]], pos[tas[a1][0]]
         if debug:
             print(f)
     # À COMPLÉTER FIN
@@ -1030,7 +1047,6 @@ def dijkstra_tasbinaire(g: Graphe, s, t=None):
 
     """
 
-
     n = g.nombre_sommets()
     dist = [float('inf')]*n
     pred = [None]*n
@@ -1040,25 +1056,24 @@ def dijkstra_tasbinaire(g: Graphe, s, t=None):
     f = tasbinaire_creer(n)
     dist[s] = 0
     tasbinaire_ajouter(f, s, 0)
+    for v, poid in g.voisins_avec_poids(s):
+        dist[v] = poid
+        pred[v] = s
+        tasbinaire_ajouter(f, v, poid)
+    count = 0
     while not tasbinaire_est_vide(f):
-            u = tasbinaire_retirer(f)
-            l[u] = f[2]
-            for v in g.voisins(u):
-                if dist[v] > dist[u] + g.poids():
-                    dist[v] = dist[u] + g.poids()
-                    pred[v] = u
-                    tasbinaire_ajouter(f, v, dist[v])
-                    if v == t:
-                        return dist[v], chemin(pred, s, t), l
+        i, j = tasbinaire_retirer(f)
+        l[i] = count
+        count += 1
+        for v, poid in g.voisins_avec_poids(i):
+            if dist[v] > dist[i] + poid:
+                dist[v] = dist[i] + poid
+                pred[v] = i
+                tasbinaire_ajouter(f, v, dist[v])
+        if t != None and l[t] != None:
+            break
     # À COMPLÉTER FIN
-
-    if t == None:
-        return dist, pred, l
-    else:
-        return dist[t], chemin(pred, s, t), l
-    # À COMPLÉTER FIN
-
-    # return (dist, pred, l) if t == None else (dist[t], chemin(s, t, pred), l)
+    return (dist, pred, l) if t == None else (dist[t], chemin(s, t, pred), l)
 
 
 def grille(n):
@@ -1410,7 +1425,6 @@ def bellman_ford(g, s):
     pred = [None]*n
 
     # À COMPLÉTER DÉBUT (10 ligne(s))
-    
 
     # À COMPLÉTER FIN
 
@@ -1903,6 +1917,7 @@ def graphe_6(n):
         g.ajouter_arete(u, u+1, 0)
     g.ajouter_arete(2*n+2, 2*n+3, n+1)
     return g
+
 
 def graphe_6_heuristique(n, u):
     if u == 0:
